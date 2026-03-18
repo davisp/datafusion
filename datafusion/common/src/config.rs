@@ -1315,11 +1315,11 @@ impl ConfigField for ConfigOptions {
     /// Reset a configuration option back to its default value
     fn reset(&mut self, key: &str) -> Result<()> {
         let Some((prefix, rest)) = key.split_once('.') else {
-            return _config_err!("could not find config namespace for key \"{key}\"");
+            return _config_err!("2: could not find config namespace for key \"{key}\"");
         };
 
         if prefix != "datafusion" {
-            return _config_err!("Could not find config namespace \"{prefix}\"");
+            return _config_err!("1: Could not find config namespace \"{prefix}\"");
         }
 
         let (section, rem) = rest.split_once('.').unwrap_or((rest, ""));
@@ -1371,7 +1371,7 @@ impl ConfigOptions {
     /// Set a configuration option
     pub fn set(&mut self, key: &str, value: &str) -> Result<()> {
         let Some((mut prefix, mut inner_key)) = key.split_once('.') else {
-            return _config_err!("could not find config namespace for key \"{key}\"");
+            return _config_err!("2: could not find config namespace for key \"{key}\"");
         };
 
         if prefix == "datafusion" {
@@ -1404,7 +1404,7 @@ impl ConfigOptions {
         }
 
         let Some(e) = self.extensions.0.get_mut(prefix) else {
-            return _config_err!("Could not find config namespace \"{prefix}\"");
+            return _config_err!("4: Could not find config namespace \"{prefix}\"");
         };
         e.0.set(inner_key, value)
     }
@@ -2172,7 +2172,7 @@ impl TableOptions {
     /// A result indicating success or failure in setting the configuration option.
     pub fn set(&mut self, key: &str, value: &str) -> Result<()> {
         let Some((mut prefix, _)) = key.split_once('.') else {
-            return _config_err!("could not find config namespace for key \"{key}\"");
+            return _config_err!("6: could not find config namespace for key \"{key}\"");
         };
 
         if prefix == "format" {
@@ -2193,7 +2193,7 @@ impl TableOptions {
         }
 
         let Some(e) = self.extensions.0.get_mut(prefix) else {
-            return _config_err!("Could not find config namespace \"{prefix}\"");
+            return _config_err!("7: Could not find config namespace \"{prefix}\"");
         };
         e.0.set(key, value)
     }
