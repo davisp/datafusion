@@ -2197,7 +2197,8 @@ impl TableOptions {
         }
 
         let Some(e) = self.extensions.0.get_mut(prefix) else {
-            return _config_err!("7: Could not find config namespace \"{prefix}\"");
+            panic!("Stack trace for prefix: {prefix}");
+            //return _config_err!("7: Could not find config namespace \"{prefix}\"");
         };
         e.0.set(key, value)
     }
