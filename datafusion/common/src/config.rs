@@ -2192,6 +2192,10 @@ impl TableOptions {
             prefix = DATAFUSION_FFI_CONFIG_NAMESPACE;
         }
 
+        for key in self.extensions.0.keys() {
+            eprintln!("KEY: {key}");
+        }
+
         let Some(e) = self.extensions.0.get_mut(prefix) else {
             return _config_err!("7: Could not find config namespace \"{prefix}\"");
         };
